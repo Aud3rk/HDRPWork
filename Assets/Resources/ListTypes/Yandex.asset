@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fc5b238ff3247e7aeee60b45f40bc9a, type: 3}
+  m_Name: Yandex
+  m_EditorClassIdentifier: 
+  ItemsInside:
+  - {fileID: 3597438789981921528, guid: fd1bb12cec5af1348aca848f1e715863, type: 3}
+  - {fileID: 5191022658240874309, guid: 93192ef3188b3424ea86bec8e46a1a48, type: 3}
+  - {fileID: 7565477419861398330, guid: 85c36eecf27f833489ec29295c27f225, type: 3}
+  BoxType: 2

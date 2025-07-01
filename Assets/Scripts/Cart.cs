@@ -11,25 +11,16 @@ namespace DefaultNamespace
 
         private int _needBox;
         private BoxType _boxType;
-        private int _wrongBoxCount;
-        private int _boxInCartCount;
-
-        private void Start()
-        {
-            _wrongBoxCount = 0;
-        }
+        private int _wrongBoxCount = 0;
+        private int _boxInCartCount = 0;
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out BoxComponent box))
-                if (box.Type == _boxType)
-                {
-                    BoxInCart();
-                    if (_wrongBoxCount>0) return;
-                    if (_boxInCartCount == _needBox) EndLevel();
-                }
-                else
-                    _wrongBoxCount++;
+            {
+                BoxCartChange(box, 1);
+                TryToEndLevel();
+            }
         }
 
         public void SetParametr(BoxType boxType, int boxCount)
@@ -37,29 +28,31 @@ namespace DefaultNamespace
             _boxType = boxType;
             _needBox = boxCount;
         }
-        private void BoxInCart()
+
+        private void BoxCartChange(BoxComponent boxComponent, int incr)
         {
-            _boxInCartCount++;
-            CartChange?.Invoke(_boxInCartCount-1,_boxInCartCount);
+            if (boxComponent.Type == _boxType)
+            {
+                _boxInCartCount += incr;
+                CartChange?.Invoke(_boxInCartCount - incr, _boxInCartCount);
+            }
+            else
+                _wrongBoxCount+=incr;
         }
 
-        private void EndLevel() => 
-            CartIsDone?.Invoke();
+        private void TryToEndLevel()
+        {
+            if (_boxInCartCount == _needBox && _wrongBoxCount == 0)
+                CartIsDone?.Invoke();
+        }
 
         private void OnTriggerExit(Collider other)
         {
             if (other.TryGetComponent(out BoxComponent box))
-                if (box.Type == _boxType)
-                {
-                    _boxInCartCount--;
-                    CartChange?.Invoke(_boxInCartCount + 1, _boxInCartCount);
-                }
-                else
-                {
-                    _wrongBoxCount--;
-                    if (_boxInCartCount == _needBox && _wrongBoxCount == 0) 
-                        EndLevel();
-                }
+            {
+                BoxCartChange(box, -1);
+                TryToEndLevel();
+            }
         }
     }
 }

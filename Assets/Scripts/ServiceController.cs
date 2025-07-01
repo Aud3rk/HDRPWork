@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = System.Random;
@@ -11,9 +12,15 @@ namespace DefaultNamespace
         [SerializeField] private UIService uiService;
         [SerializeField] private ControlItems controlItems;
         [SerializeField] private Cart cart;
-        [SerializeField] private GameFactory gameFactory;
         
+        [Header("For Game Factory")]
+        [SerializeField] private Transform spawnPoint;
+        [SerializeField] private GameObject boxPrefab;
+        [SerializeField] private List<TypeList> gameObjectInsideBoxList;
+
+        private GameFactory _gameFactory;
         private ActionBus _actionBus;
+        
         private int _boxCount;
         private BoxType _boxType;
         private float _spawnDelay = 0.3f;
@@ -23,6 +30,7 @@ namespace DefaultNamespace
         public void Construct(BoxType boxType, int boxCount)
         {
             _actionBus = new ActionBus();
+            _gameFactory = new GameFactory(spawnPoint, boxPrefab, gameObjectInsideBoxList);
             SetParametrs(boxType, boxCount);
             SubscribeServices();
         }
@@ -79,7 +87,7 @@ namespace DefaultNamespace
         
         private void SpawnBox(BoxType boxType)
         {
-            GameObject boxGameObject = gameFactory.InstantiateBox(boxType);
+            GameObject boxGameObject = _gameFactory.InstantiateBox(boxType);
             AddBoxToList(boxGameObject);
             boxGameObject.GetComponent<Rigidbody>().AddForce(boxGameObject.transform.forward * _spawnForce, ForceMode.Impulse);
         }

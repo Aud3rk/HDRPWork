@@ -13,10 +13,10 @@ namespace DefaultNamespace
         public event Action MouseButtonExit;
         public event Action MouseButtonUp;
 
-        [SerializeField] private FixedJoint fixedJoint;
-        [SerializeField] private Rigidbody forFixedJoint;
-        [SerializeField] private int layer;
-        [SerializeField] private float highOfGrab;
+        public FixedJoint fixedJoint;
+        public Rigidbody forFixedJoint;
+        public int layer;
+        public float highOfGrab =0.5f;
 
 
         public GameObject ObjectInside { get; set; }
@@ -43,12 +43,6 @@ namespace DefaultNamespace
             MouseButtonExit?.Invoke();
         }
 
-        public void HookBox(Rigidbody hookRigidbody)
-        {
-            transform.position = new Vector3(hookRigidbody.position.x, transform.position.y + highOfGrab,
-                hookRigidbody.position.z);
-            fixedJoint.connectedBody = hookRigidbody;
-        }
 
         public void DropBox()
         {

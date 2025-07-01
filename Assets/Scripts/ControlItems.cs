@@ -9,10 +9,12 @@ public class ControlItems : MonoBehaviour
     [SerializeField] private Camera camera;
     [SerializeField] private Rigidbody hookRb;
     [SerializeField] private Transform _hookTransform;
+
+    private BoxComponent hookedBox;
+    
     private bool isHooked;
     private float _defaultSpeed = 15f;
     private int _speedWithoutBox = 1000;
-
 
     private void Start()
     {
@@ -27,7 +29,7 @@ public class ControlItems : MonoBehaviour
     public void HookBox(BoxComponent boxComponent)
     {
         if (isHooked) return;
-            boxComponent.HookBox(hookRb);
+        SetBoxParametrs(boxComponent);
         isHooked = true;
         speed = _defaultSpeed;
     }
@@ -45,9 +47,20 @@ public class ControlItems : MonoBehaviour
         }
     }
 
+    private void SetBoxParametrs(BoxComponent boxComponent)
+    {
+        hookedBox = boxComponent;
+        boxComponent.transform.position = new Vector3(hookRb.position.x, hookRb.position.y - boxComponent.highOfGrab,
+            hookRb.position.z);
+        boxComponent.fixedJoint.connectedBody = hookRb;
+    }
+
     public void DropBox()
     {
         isHooked = false;
+        hookedBox.transform.position += new Vector3(0, 0.3f, 0);
+        hookedBox.fixedJoint.connectedBody = hookedBox.forFixedJoint;
         speed = _speedWithoutBox;
+        hookedBox = null;
     }
 }

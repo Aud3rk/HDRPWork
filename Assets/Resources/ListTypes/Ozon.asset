@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fc5b238ff3247e7aeee60b45f40bc9a, type: 3}
+  m_Name: Ozon
+  m_EditorClassIdentifier: 
+  ItemsInside:
+  - {fileID: 2549519526164112936, guid: 4ce2214f40e71034cb3794e065a144c1, type: 3}
+  - {fileID: 3492132579462693191, guid: b59e1906dba736f4cba6f60d7a0c29bd, type: 3}
+  - {fileID: 3896642821440806144, guid: e682a38ca845aa04cbbb2df214048fa2, type: 3}
+  BoxType: 0
